@@ -1,3 +1,11 @@
+terraform {
+  backend "s3" {
+    bucket = "evr-tfstate"
+    key    = "terraform/tfstate/"
+    region = "us-east-1"
+  }
+}
+
 provider "aws" {
   #access_key = "ACCESS_KEY_HERE"
   #secret_key = "SECRET_KEY_HERE"
@@ -11,4 +19,9 @@ resource "aws_instance" "amzn-test" {
     Name = "test"
     Environment = "CI"
   }
+}
+
+resource "aws_s3_bucket" "tfstate-bucket" {
+  bucket = "evr-tfstate"
+  acl    = "private"
 }
