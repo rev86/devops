@@ -7,7 +7,7 @@ provider "aws" {
 resource "aws_instance" "amzn-test" {
   ami           = "ami-4fffc834"
   instance_type = "t2.micro"
-  key_name      = "test"
-  tag_key       = "Name"
-  tag_value     = "test"  
+  tags {
+    Name = "test"
+  }
 }
