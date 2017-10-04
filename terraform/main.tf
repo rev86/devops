@@ -5,7 +5,7 @@ provider "aws" {
   #test
   region     = "${var.region}"
 }
-
+/*
 resource "aws_instance" "jenkins-master" {
   ami           = "${var.jenkins_master_ami}"
   instance_type = "${var.jenkins_master_instance_type}"
@@ -16,3 +16,4 @@ resource "aws_instance" "jenkins-master" {
   }
   iam_instance_profile = "${aws_iam_instance_profile.jenkins_master_instance_profile.id}"
 }
+*/
