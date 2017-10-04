@@ -1,10 +1,3 @@
-terraform {
-  backend "s3" {
-    bucket = "evr-tfstate"
-    key    = "terraform.tfstate"
-    region = "us-east-1"
-  }
-}
 
 provider "aws" {
   #access_key = "ACCESS_KEY_HERE"
@@ -12,19 +5,12 @@ provider "aws" {
   region     = "${var.region}"
 }
 
-resource "aws_instance" "amzn-test" {
-  ami           = "ami-4fffc834"
-  instance_type = "t2.micro"
+resource "aws_instance" "jenkins-master" {
+  ami           = "${var.jenkins_master_ami}"
+  instance_type = "${var.jenkins_master_instance_type}"
+  key_name      = "${var.jenkins_master_instance_key}"
   tags {
-    Name = "test"
-    Environment = "CI"
+    Name = "jenkins-master"
+    Environment = "INFRA"
   }
-}
-
-resource "aws_s3_bucket" "tfstate-bucket" {
-  bucket = "evr-tfstate"
-  acl    = "private"
-  versioning {
-   enabled = true
- }
 }

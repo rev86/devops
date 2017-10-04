@@ -9,3 +9,12 @@ variable "tfstate_bucket" {
 variable "tfstate_path" {
   default = "terraform.tfstate"
 }
+variable "jenkins_master_ami" {
+  default = "ami-b00ff4ca"
+}
+variable "jenkins_master_instance_type" {
+  default = "t2.micro"
+}
+variable "tfstate_bucket_name" {
+  default = "evr-tfstate"
+}
