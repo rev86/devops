@@ -3,6 +3,9 @@
 variable "region" {
   default = "us-east-1"
 }
+variable "jenkins_master_instance_key" {
+  default = "test"
+}
 variable "tfstate_bucket" {
   default = "evr-tfstate"
 }

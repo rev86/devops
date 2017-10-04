@@ -14,4 +14,5 @@ resource "aws_instance" "jenkins-master" {
     Name = "jenkins-master"
     Environment = "INFRA"
   }
+  iam_instance_profile = "${aws_iam_instance_profile.jenkins_master_instance_profile.id}"
 }
