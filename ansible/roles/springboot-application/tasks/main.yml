@@ -10,6 +10,7 @@
 
 - name: "copy spring boot application artifact"
   include: "copy_springboot_artifact.yml"
+  notify: "restart spring-boot service"
 
 - name: "create spring-boot configuration"
   template: src={{ application_properties_template }} dest={{ spring_boot_file_dir }}/application.properties owner={{ spring_boot_username }} group={{ spring_boot_username }}
