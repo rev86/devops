@@ -5,6 +5,9 @@
 
     <groupId>org.springframework</groupId>
     <artifactId>gs-actuator-service</artifactId>
+    <configuration>
+        <executable>true</executable>
+    </configuration>
     <version>0.1.0</version>
 
     <parent>
