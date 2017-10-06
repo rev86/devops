@@ -14,3 +14,4 @@
 - name: "upload artifact to application instance"
   copy: src={{ spring_boot_file_location_local.stat.path }} dest={{ spring_boot_file_dir }}/{{ spring_boot_file }} force=True
   register: spring_boot_file_location
+  notify: "restart spring-boot service"
