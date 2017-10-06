@@ -1,0 +1,49 @@
+---
+- name: "create spring-boot group"
+  group: name={{ spring_boot_username }}
+
+- name: "create spring-boot user"
+  user: name={{ spring_boot_username }} group={{ spring_boot_username }} comment="user for application {{ spring_boot_application_id }}"
+
+- name: "create springboot directory"
+  file: path={{ spring_boot_file_dir }} state=directory owner={{ spring_boot_username }} group={{ spring_boot_username }}
+
+- name: "copy spring boot application artifact"
+  include: "copy_springboot_artifact.yml"
+
+- name: "create spring-boot configuration"
+  template: src={{ application_properties_template }} dest={{ spring_boot_file_dir }}/application.properties owner={{ spring_boot_username }} group={{ spring_boot_username }}
+  notify: "restart spring-boot service"
+
+- name: "create spring-boot initscript configuration"
+  template: src=initscript.conf.j2 dest={{ spring_boot_file_dir }}/{{ spring_boot_file }}.conf owner={{ spring_boot_username }} group={{ spring_boot_username }}
+  notify: "restart spring-boot service"
+
+- name: "set spring boot file permissions"
+  file: path={{ spring_boot_file_dir }}/{{ spring_boot_file }} owner={{ spring_boot_username }} group={{ spring_boot_username }} mode=0755
+
+- name: "create log directory"
+  file: path={{ spring_boot_file_dir }}/log state=directory owner={{ spring_boot_username }} group={{ spring_boot_username }}
+
+- name: "create link for spring-boot service"
+  file: src={{ spring_boot_file_dir }}/{{ spring_boot_file }} dest=/etc/init.d/{{ spring_boot_application_id }} owner={{ spring_boot_username }} group={{ spring_boot_username }} state=link
+
+- name: "get full qualified application executble path"
+  shell: readlink -f {{ spring_boot_file_dir }}/{{ spring_boot_file }}
+  register: shell_output
+
+- name: "set full qualified application executble path fact"
+  set_fact:
+    spring_boot_file_fq: "{{ shell_output.stdout }}"
+
+- name: "enable spring-boot service"
+  service: name={{ spring_boot_application_id }} enabled=yes
+
+- name: "wait for application to come up"
+  uri:
+    url: "http://127.0.0.1:{{spring_boot_management_port}}/health"
+    status_code: 200
+  register: result
+  until: result.status == 200
+  retries: 60
+  delay: 10

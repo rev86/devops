@@ -1,0 +1,14 @@
+spring_boot_application_id: "gs-actuator-service"
+spring_boot_application_version: "0.1.0"
+spring_boot_application_build: "21"
+spring_boot_file: "{{ spring_boot_application_id }}-{{ spring_boot_application_version }}.jar"
+spring_boot_file_dir: "/usr/local/{{ spring_boot_application_id }}"
+s3_bucket_name: "evr-test"
+s3_bucket_path: "builds/{{ spring_boot_application_id }}-{{ spring_boot_application_build }}/jobs/{{ spring_boot_application_id }}/{{ spring_boot_application_build }}"
+application_properties_template: "application.properties.j2"
+spring_boot_http_port: 9001
+spring_boot_profile: "default"
+
+spring_boot_username: "springboot"
+spring_boot_user_dir: "~{{ spring_boot_username }}"
+spring_boot_log_folder: "{{spring_boot_user_dir}}/log"

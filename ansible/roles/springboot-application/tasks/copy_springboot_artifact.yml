@@ -1,0 +1,16 @@
+- name: "download artifact from s3"
+  local_action: aws_s3 bucket={{ s3_bucket_name }} object={{ s3_bucket_path }}/{{ spring_boot_file }} dest=/tmp/{{ spring_boot_file }} mode=get overwrite=different
+  become: no
+
+- name: "check for spring boot application file"
+  local_action: stat path=/tmp/{{ spring_boot_file }}
+  become: no
+  register: spring_boot_file_location_local
+  ignore_errors: True
+
+- fail: msg="local spring boot file '{{ spring_boot_file_location_local.stat.path }}' not found"
+  when: not spring_boot_file_location_local.stat.exists
+
+- name: "upload artifact to application instance"
+  copy: src={{ spring_boot_file_location_local.stat.path }} dest={{ spring_boot_file_dir }}/{{ spring_boot_file }} force=True
+  register: spring_boot_file_location

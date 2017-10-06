@@ -1,0 +1,16 @@
+---
+# tasks file for java
+- name: "check for java8 install tasks"
+  local_action: stat path="{{ role_path }}/tasks/java8_{{ linux_distribution }}.yml"
+  become: no
+  register: java8_install_tasks_optional
+  ignore_errors: True
+
+- debug: msg="including {{ java8_install_tasks_optional.stat.path }}"
+  when: java8_install_tasks_optional.stat.exists
+
+- include: " {{ java8_install_tasks_optional.stat.path }}"
+  when: java8_install_tasks_optional.stat.exists
+
+- debug: msg="no java8 install tasks found for {{ linux_distribution }}"
+  when: not java8_install_tasks_optional.stat.exists
