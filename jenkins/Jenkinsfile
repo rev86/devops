@@ -28,4 +28,16 @@ node {
    stage('Deploy_CI'){
      deployed="true"
    }
+   stage('Deploy_DEV'){
+     deployed="true"
+   }
+   stage('Deploy_QA'){
+     deployed="true"
+   }
+   stage('Deploy_STAGE'){
+     deployed="true"
+   }
+   stage('Deploy_PROD'){
+     deployed="true"
+   }
 }
