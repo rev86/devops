@@ -6,7 +6,7 @@ node {
       git branch: 'develop', credentialsId: 'fe4b93bd-7708-4e6d-9451-df3961befeaf', url: 'https://github.com/rev86/devops.git'
       // Get the Maven tool.
       // ** NOTE: This 'M3' Maven tool must be configured
-      // **       in the global configuration.           
+      // **       in the global configuration.
       mvnHome = tool 'maven-3.5.0'
    }
    stage('Build') {
@@ -24,5 +24,8 @@ node {
    stage('Results') {
       junit '**/target/surefire-reports/TEST-*.xml'
       archive 'target/*.jar'
+   }
+   stage('Deploy_CI'){
+     deployed="true"
    }
 }
