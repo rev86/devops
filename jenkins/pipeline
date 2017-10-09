@@ -1,0 +1,28 @@
+properties([pipelineTriggers([githubPush()])])
+node {
+   def mvnHome
+   stage('Preparation') { // for display purposes
+      // Get some code from a GitHub repository
+      git branch: 'develop', credentialsId: 'fe4b93bd-7708-4e6d-9451-df3961befeaf', url: 'https://github.com/rev86/devops.git'
+      // Get the Maven tool.
+      // ** NOTE: This 'M3' Maven tool must be configured
+      // **       in the global configuration.           
+      mvnHome = tool 'maven-3.5.0'
+   }
+   stage('Build') {
+      // Run the maven build
+      if (isUnix()) {
+          env.JAVA_HOME="${tool 'jdk-1.144'}"
+          env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
+          dir('gs-actuator-service/complete/') {
+             sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
+        }
+      } else {
+         bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean package/)
+      }
+   }
+   stage('Results') {
+      junit '**/target/surefire-reports/TEST-*.xml'
+      archive 'target/*.jar'
+   }
+}
