@@ -26,7 +26,18 @@ node {
       archive 'target/*.jar'
    }
    stage('Deploy_CI'){
-     deployed="true"
+          ansiblePlaybook('app.yml') {
+            inventoryPath('/etc/ansible/ec2/py')
+            ansibleName('ansible_2.4.0')
+            /*tags('')
+            credentialsId('credsid')
+            sudo(true)
+            sudoUser("user")*/
+            extraVars {
+              extraVar("role_name", "gs-actuator", false)
+              extraVar("pring_boot_application_build", "$BUILD_NUMBER", false)
+            }
+        }
    }
    stage('Deploy_DEV'){
      deployed="true"
