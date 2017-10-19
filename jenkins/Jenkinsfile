@@ -28,7 +28,7 @@ node {
    stage('Deploy_CI'){
           ansiblePlaybook(
             playbook: 'ansible/app.yml',
-            inventory: '/etc/ansible/ec2/py',
+            inventory: '/etc/ansible/ec2.py',
             installation: 'ansible_2.4.0',
             /*tags('')
             credentialsId('credsid')
