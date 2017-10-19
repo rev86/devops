@@ -2,13 +2,14 @@ Role Name
 =========
 
 This roles provisions a Spring Boot application.
+Yeah!
 
 Requirements
 ------------
 
 The Spring Boot application must be built using the [Spring Boot Gradle plugin](http://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html) with the `executable` option set to `true` so that the build produces an executable JAR that can be used as a service.
 
-**example build.gradle** 
+**example build.gradle**
 ```
 buildscript {
     repositories {
@@ -65,8 +66,8 @@ Including an example of how to use your role (for instance, with variables passe
 ```
 hosts: localhost
 roles:
-- { role: ansible-springboot-role, 
-    spring_boot_file_source_local: 'example-application.jar' 
+- { role: ansible-springboot-role,
+    spring_boot_file_source_local: 'example-application.jar'
   }
 ```
 
