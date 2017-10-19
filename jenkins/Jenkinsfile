@@ -29,7 +29,7 @@ node {
           ansiblePlaybook(
             playbook: 'app.yml',
             inventory: '/etc/ansible/ec2/py',
-            ansibleName: 'ansible_2.4.0',
+            installation: 'ansible_2.4.0',
             /*tags('')
             credentialsId('credsid')
             sudo(true)
