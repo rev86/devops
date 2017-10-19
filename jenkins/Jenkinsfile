@@ -35,7 +35,7 @@ node {
             sudo(true)
             sudoUser("user")*/
             extraVars: [
-              role_name: "gs-actuator"
+              role_name: "gs-actuator",
               spring_boot_application_build: "$BUILD_NUMBER"
             ]
         )
