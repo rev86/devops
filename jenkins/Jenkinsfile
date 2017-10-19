@@ -26,17 +26,18 @@ node {
       archive 'target/*.jar'
    }
    stage('Deploy_CI'){
-          ansiblePlaybook('app.yml') {
-            inventoryPath('/etc/ansible/ec2/py')
-            ansibleName('ansible_2.4.0')
+          ansiblePlaybook('app.yml'){
+            //playbook: 'app.yml',
+            inventoryPath: '/etc/ansible/ec2/py',
+            ansibleName: 'ansible_2.4.0',
             /*tags('')
             credentialsId('credsid')
             sudo(true)
             sudoUser("user")*/
-            extraVars {
-              extraVar("role_name", "gs-actuator", false)
-              extraVar("pring_boot_application_build", "$BUILD_NUMBER", false)
-            }
+            extraVars: [
+              role_name: "gs-actuator"
+              spring_boot_application_build: "$BUILD_NUMBER"
+            ]
         }
    }
    stage('Deploy_DEV'){
