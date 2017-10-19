@@ -16,5 +16,4 @@
 - name: "get application healthcheck response"
   debug:
     msg: "Application healthcheck result: {{ result.body }}"
-  when: result.body is defined
   listen: "restart spring-boot service"
