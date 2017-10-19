@@ -1,6 +1,6 @@
 ---
 # vars file for gs-actuator
-spring_boot_application_id: "gs-actuator"
+spring_boot_application_id: "gs-actuator-service"
 spring_boot_application_version: "0.1.0"
 application_properties_template: "gs_actuator.properties.j2"
 spring_boot_http_port: 9000
