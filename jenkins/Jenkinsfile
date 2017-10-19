@@ -36,7 +36,9 @@ node {
             sudoUser("user")*/
             extraVars: [
               role_name: "gs-actuator"
-              spring_boot_application_build: "$BUILD_NUMBER" ])   
+              spring_boot_application_build: "$BUILD_NUMBER"
+            ]
+        )
    }
    stage('Deploy_DEV'){
      deployed="true"
