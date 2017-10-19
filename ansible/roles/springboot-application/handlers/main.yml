@@ -7,6 +7,7 @@
   uri:
     url: "http://{{ spring_boot_management_address }}:{{ spring_boot_management_port }}/health"
     status_code: 200
+    return_content: yes
   register: result
   until: result.status == 200
   retries: 60
@@ -15,6 +16,6 @@
 
 - name: "get application healthcheck response"
   debug:
-    msg: "Application healthcheck result: {{ result.msg }}"
-  when: result.msg is defined
+    msg: "Application healthcheck result: {{ result.content }}"
+  when: result.content is defined
   listen: "restart spring-boot service"
