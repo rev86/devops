@@ -20,6 +20,21 @@ node {
       } else {
          bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean package/)
       }
+   }/*
+   stage('Publish artifacts') {
+     s3Upload(
+       file:'',
+       bucket:'my-bucket',
+       path:'path/to/target/file.txt'
+     )
+   }*/
+   stage('Copy artifact'){
+     try {
+       step($class: 'hudson.plugins.copyartifact.CopyArtifact', projectName: "$JOB_NAME", filter: 'complete/target/*.jar')
+     }
+     catch (none) {
+       echo 'No artifact to copy from ' + "$JOB_NAME"
+    }
    }
    stage('Results') {
       junit '**/target/surefire-reports/TEST-*.xml'
