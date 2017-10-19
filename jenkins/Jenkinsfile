@@ -27,7 +27,7 @@ node {
    }
    stage('Deploy_CI'){
           ansiblePlaybook(
-            playbook: 'app.yml',
+            playbook: 'ansible/app.yml',
             inventory: '/etc/ansible/ec2/py',
             installation: 'ansible_2.4.0',
             /*tags('')
