@@ -28,9 +28,23 @@ node {
        path:'path/to/target/file.txt'
      )
    }*/
-   stage('Copy artifact'){
+   stage('Copy artifact to s3'){
      try {
-       step($class: 'hudson.plugins.copyartifact.CopyArtifact', projectName: "$JOB_NAME", filter: 'complete/target/*.jar')
+       step([
+        $class: 'S3BucketPublisher',
+        entries: [[
+            sourceFile: '**/gs-actuator-service/complete/target/*.jar',
+            bucket: "evr-test/builds/$JOB_NAME-$BUILD_NUMBER",
+            selectedRegion: 'us-east-1',
+            noUploadOnFailure: false,
+            managedArtifacts: true,
+            flatten: true,
+            showDirectlyInBrowser: false,
+            keepForever: false,
+        ]],
+        profileName: 'test-build',
+        dontWaitForConcurrentBuildCompletion: false,
+      ])
      }
      catch (none) {
        echo 'No artifact to copy from ' + "$JOB_NAME"
