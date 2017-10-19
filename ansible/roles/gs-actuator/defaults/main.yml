@@ -2,5 +2,4 @@
 # defaults file for gs-actuator
 application_properties_template: "gs_actuator.properties.j2"
 spring_boot_http_port: 9000
-spring_boot_management_port: 9001
-spring_boot_management_address: 127.0.0.1
+spring_boot_management_port: 9002
