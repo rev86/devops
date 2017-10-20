@@ -55,6 +55,7 @@ node {
       archive 'target/*.jar'
    }
    stage('Deploy_CI'){
+     ansiColor('xterm') {
           ansiblePlaybook(
             playbook: 'ansible/app.yml',
             credentialsId: '7dcbb7eb-a515-474d-bbea-3f8fe503a947',
@@ -70,6 +71,7 @@ node {
               spring_boot_application_build: "$BUILD_NUMBER"
             ]
         )
+      }
    }
    stage('Deploy_DEV'){
      deployed="true"
